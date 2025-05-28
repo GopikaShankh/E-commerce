@@ -1,0 +1,322 @@
+/* Reset Styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Base Styles  */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  background-color: #f9f9f9;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://slidescorner.com/wp-content/uploads/2025/05/Gray-Professional-PPT-Background-Clear-and-Simple-free-for-PowerPoint-Google-Slides-or-Wallpaper-by-SlidesCorner.com_-700x394.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* Banner Section */
+.banner {
+  background: linear-gradient(135deg, #42b983 0%, #2c3e50 100%);
+  color: white;
+  padding: 5rem 1rem;
+  text-align: center;
+  animation: fadeInDown 1s ease forwards;
+}
+
+/* About & Contact Section */
+.about-us, .contact-us {
+  background-color: white;
+  padding: 3rem 1rem;
+  margin: 3rem 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px rgb(0 0 0 / 0.07);
+  animation: fadeInUp 1s ease forwards;
+}
+
+.about-us h2, .contact-us h2 {
+  font-size: 2rem;
+  color: #2c3e50;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.about-us p, .contact-us p {
+  font-size: 1.1rem;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  color: #555;
+}
+
+/* Product Page */
+.products-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+  padding: 2rem 1rem;
+}
+
+.product-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.product-card:hover,
+.product-card:focus-within {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+.product-image {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 1rem;
+}
+
+.product-info h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.product-info p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Order Page */
+.order-details {
+  max-width: 600px;
+  margin: 2rem auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.order-details h2 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  font-weight: 700;
+  font-size: 2rem;
+}
+
+.order-details p {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  color: #444;
+}
+
+.order-details .total-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  color: #42b983;
+}
+
+/* Contact Form */
+.contact-form {
+  max-width: 600px;
+  margin: 0 auto 4rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  color: #2c3e50;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.2rem;
+  border: 1.8px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  font-family: inherit;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #42b983;
+  outline: none;
+  box-shadow: 0 0 5px #42b983;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-form button {
+  background: linear-gradient(135deg, #42b983, #2c3e50);
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.75rem 2rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-form button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+  z-index: 0;
+}
+
+.contact-form button:hover::before {
+  left: 100%;
+}
+
+.contact-form button:hover {
+  background-color: #368f6e;
+  transform: scale(1.03);
+}
+
+/* Button Group */
+.btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.btn-group button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.add-to-cart {
+  background: linear-gradient(to right, #36d1dc, #5b86e5);
+}
+
+.buy-now {
+  background: linear-gradient(to right, #43e97b, #38f9d7);
+}
+
+.btn-group button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.15);
+  transition: left 0.4s ease;
+  z-index: 0;
+}
+
+.btn-group button:hover::before {
+  left: 100%;
+}
+
+.btn-group button:hover {
+  transform: translateY(-3px) scale(1.05);
+}
+
+.btn-group button:active {
+  transform: scale(0.97);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+  .product-card {
+    height: auto;
+  }
+
+  .heading {
+    margin-top: 3rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .products-list {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .order-details,
+  .contact-form {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .heading {
+    margin-top: 4rem;
+  }
+}
