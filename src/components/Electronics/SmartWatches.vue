@@ -1,79 +1,93 @@
 <template>
-    <!-- Navigation bar component -->
-    <NavBar />
-    <div class="ethnicwear-container">
-        <!-- Page heading -->
-        <h1 class="heading">Ethnic Wear Collection</h1>
-        <!-- Grid container for product cards -->
-        <div class="products-grid">
-          <!-- Loop through ethnicProducts array and display each product -->
-          <div v-for="(product, index) in ethnicProducts" :key="index" class="product-card">
-            <!-- Product image -->
-            <img :src="product.image" :alt="product.title" class="product-image" />
-            <!-- Product title -->
-            <h2 class="product-title">{{ product.title }}</h2>
-            <!-- Product subtitle or description -->
-            <p class="product-subtitle">{{ product.subtitle }}</p>
-            <!-- Product rating with star symbol -->
-            <div class="rating">⭐ {{ product.rating }} / 5</div>
-            <!-- Product price -->
-            <p class="product-price">₹{{ product.price }}</p>
-            <!-- Buttons to add product to cart or buy now -->
-            <div class="btn-group">
-              <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
-              <button class="buy-now" @click="buyNow(product)">Buy Now</button>
-            </div>
+  <!-- Navigation bar component -->
+  <NavBar />
+  
+  <!-- Main section container -->
+  <section class="container">
+    <!-- Page heading -->
+    <h1 class="heading">Smart Watches ⌚</h1>
+    
+    <!-- Subheading / description text -->
+    <p class="subheading">Track time, health, and style with the latest smartwatches!</p>
+
+    <!-- Grid container for product cards -->
+    <div class="products-grid">
+      <!-- Loop through products array and render each product card -->
+      <div
+        v-for="(product, index) in products"
+        :key="index"
+        class="product-card"
+      >
+        <!-- Product image -->
+        <img :src="product.image" :alt="product.title" class="product-image" />
+        
+        <!-- Product title -->
+        <h3 class="product-title">{{ product.title }}</h3>
+        
+        <!-- Product rating displayed with a star icon -->
+        <p class="product-rating">⭐ {{ product.rating }} / 5</p>
+        
+        <!-- Product price in Indian Rupees -->
+        <p class="product-price">₹{{ product.price }}</p>
+        
+        <!-- Button group: Add to Cart and Buy Now buttons -->
+        <div class="btn-group">
+          <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
+          <button class="buy-now" @click="buyNow(product)">Buy Now</button>
         </div>
       </div>
     </div>
+  </section>
 </template>
 
 <script>
-import NavBar from '../NavBar.vue'; 
-import { useCartStore } from '@/store/cartStore';
+import NavBar from '../NavBar.vue';  // Import NavBar component
+import { useCartStore } from '@/store/cartStore';  // Import Pinia store for cart
 
 export default {
-  name: 'EthnicWear',
+  name: "SmartWatches",
   components: {
-    NavBar,  // Register NavBar component locally
+    NavBar,  // Register NavBar component
   },
   data() {
     return {
-      // Array of ethnic wear products with details
-      ethnicProducts: [
-        {
-          title: 'Banarasi Saree',
-          subtitle: 'Traditional | Silk',
-          rating: 4.8,
-          price: 2499,
-          // Image imported via require to bundle correctly
-          image: require('@/assets/subItems/EthinicWaer/banarasi_saree.jpg'),
-        },
-        // ...other products with similar structure
-      ],
+      // Array of smartwatch products with title, price, rating, and image path
+      products: [
+        { title: "Apple Watch Series 9", price: 42999, rating: 4.8, image: require('@/assets/subItems/SmartWatches/apple-watch9.jpg') },
+        { title: "Samsung Galaxy Watch 6", price: 32999, rating: 4.6, image: require('@/assets/subItems/SmartWatches/galaxy-watch6.jpg') },
+        { title: "Noise ColorFit Ultra 3", price: 4999, rating: 4.3, image: require('@/assets/subItems/SmartWatches/noise-ultra3.jpg') },
+        { title: "boAt Storm Call 2", price: 2299, rating: 4.2, image: require('@/assets/subItems/SmartWatches/boat-storm.jpg') },
+        { title: "Fire-Boltt Visionary", price: 2999, rating: 4.4, image: require('@/assets/subItems/SmartWatches/fire-boltt.jpg') },
+        { title: "Fastrack Reflex Vox", price: 4499, rating: 4.1, image: require('@/assets/subItems/SmartWatches/fastrack-vox.jpg') },
+        { title: "Amazfit GTR 4", price: 16999, rating: 4.5, image: require('@/assets/subItems/SmartWatches/amazfit-gtr4.jpg') },
+        { title: "Realme Watch 3 Pro", price: 4499, rating: 4.2, image: require('@/assets/subItems/SmartWatches/realme-watch3.jpg') },
+        { title: "Pebble Cosmos Luxe", price: 3499, rating: 4.0, image: require('@/assets/subItems/SmartWatches/pebble-cosmos.jpg') },
+        { title: "OnePlus Nord Watch", price: 4999, rating: 4.3, image: require('@/assets/subItems/SmartWatches/oneplus-nord.jpg') },
+      ]
     };
   },
   methods: {
-    // Adds selected product to the cart using Pinia store
+    // Method to add selected product to the cart
     addToCart(product) {
-      const cartStore = useCartStore()
-      cartStore.addToCart(product)
+      const cartStore = useCartStore()  // Access the cart store
+      cartStore.addToCart(product)      // Call addToCart action in the store
       alert(`${product.title} added to cart!`);  // Confirmation alert
     },
-    // Handles 'Buy Now' button click
-    buyNow(product) {
-      const gstRate = 0.18;  // GST percentage
-      const gstAmount = product.price * gstRate;  // Calculate GST amount
-      const priceWithGst = product.price + gstAmount;  // Total price including GST
 
-      // Create product object including GST details
+    // Method to handle buying product immediately
+    buyNow(product) {
+      const gstRate = 0.18;  // GST tax rate of 18%
+      const gstAmount = product.price * gstRate;  // Calculate GST amount
+      const priceWithGst = product.price + gstAmount;  // Calculate total price including GST
+
+      // Create new product object including GST details
       const productWithGst = {
         ...product,
-        gstAmount: gstAmount.toFixed(2),
-        priceWithGst: priceWithGst.toFixed(2),
+        gstAmount: gstAmount.toFixed(2),    // GST amount rounded to 2 decimals
+        priceWithGst: priceWithGst.toFixed(2),  // Price including GST rounded to 2 decimals
       };
 
-      // Navigate to OrderPage passing product data as query string
+      // Navigate to OrderPage with product details passed as query parameters (stringified)
       this.$router.push({
         name: 'OrderPage',
         query: { product: JSON.stringify(productWithGst) }
@@ -84,167 +98,78 @@ export default {
 </script>
 
 <style scoped>
-/* Container padding for ethnic wear page */
-.ethnicwear-container {
-  padding: 1.5rem;
+/* Container padding and full width */
+.container {
+  padding: 2rem;
+  width: 100%;
 }
 
-/* Main heading styles */
+/* Heading style: larger font, centered, margin bottom */
 .heading {
+  font-size: 2.5rem;
   text-align: center;
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 2rem;
-  color: #2c3e50;
+  margin-bottom: 0.5rem;
 }
 
-/* Grid layout for product cards */
+/* Subheading style: smaller font, centered, muted color */
+.subheading {
+  text-align: center;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  color: #555;
+}
+
+/* Grid layout for product cards with responsive columns and gap */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
 /* Individual product card styling */
 .product-card {
-  border: 1px solid #ddd;
-  border-radius: 12px;
+  background: #fff;
   padding: 1rem;
-  background-color: #fff;
-  transition: 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Hover effect to lift card and add shadow */
+/* Hover effect on product card to lift slightly */
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
-/* Product image styling with fixed height and rounded corners */
+/* Product image styling */
 .product-image {
   width: 100%;
-  height: 300px;
+  height: 250px;
   object-fit: cover;
   border-radius: 10px;
+  margin-bottom: 1rem;
 }
 
 /* Product title styling */
 .product-title {
-  margin: 0.8rem 0 0.3rem;
   font-size: 1.1rem;
   font-weight: 600;
+  margin-bottom: 0.4rem;
 }
 
-/* Subtitle with smaller font and muted color */
-.product-subtitle {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 0.5rem;
+/* Product rating styling with star color */
+.product-rating {
+  font-size: 0.95rem;
+  color: #f39c12;
+  margin-bottom: 0.4rem;
 }
 
-/* Rating text color styled in orange */
-.rating {
-  font-size: 0.9rem;
-  color: #ff9800;
-  margin-bottom: 0.5rem;
-}
-
-/* Price styled with prominent color and bold */
+/* Product price styling with pinkish color */
 .product-price {
-  font-size: 1.1rem;
-  font-weight: bold;
+  font-size: 1rem;
   color: #e91e63;
   margin-bottom: 1rem;
-}
-
-/* Responsive Design for medium screens */
-@media (max-width: 853px) {
-    .product-image {
-        height: 280px;  /* Slightly smaller image */
-    }
-    .products-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-    }
-}
-
-/* Responsive Design for tablets and smaller screens */
-@media (max-width: 768px) {
-    .product-image {
-        height: 250px;
-    }
-    .products-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0.5rem;
-    }
-
-    .heading {
-        font-size: 1.6rem;
-        margin-bottom: 1.5rem;
-    }
-
-    .product-title {
-        font-size: 1rem;
-    }
-
-    .product-subtitle,
-    .rating,
-    .product-price {
-        font-size: 0.9rem;
-    }
-
-    /* Buttons (if class names cart-btn or buy-btn used) */
-    .cart-btn,
-    .buy-btn {
-        font-size: 0.9rem;
-        padding: 0.4rem 0.8rem;
-    }
-}
-
-/* Responsive Design for mobile phones */
-@media (max-width: 480px) {
-  .ethnicwear-container {
-    padding: 1rem;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(2, 1fr);  /* Two columns on small screens */
-    gap: 0.5rem;
-  }
-
-  .product-image {
-    height: 190px;  /* Smaller image height for mobile */
-  }
-
-  .heading {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
-  }
-
-  .product-title {
-    font-size: 1rem;
-  }
-
-  .product-subtitle,
-  .rating,
-  .product-price {
-    font-size: 0.85rem;
-  }
-
-  /* Button group layout adjustment for small screens */
-  .btn-group {
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  /* Buttons take full width on mobile */
-  .cart-btn,
-  .buy-btn {
-    width: 100%;
-    font-size: 0.95rem;
-    padding: 0.5rem 0;
-  }
 }
 </style>

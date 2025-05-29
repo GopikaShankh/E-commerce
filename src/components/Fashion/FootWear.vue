@@ -10,8 +10,8 @@
         <div class="rating">⭐ {{ shoe.rating }} / 5</div>
         <p class="product-price">₹{{ shoe.price }}</p>
         <div class="btn-group">
-          <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
-          <button class="buy-now" @click="buyNow(product)">Buy Now</button>
+          <button class="add-to-cart" @click="addToCart(shoe)">Add to Cart</button>
+          <button class="buy-now" @click="buyNow(shoe)">Buy Now</button>
         </div>
       </div>
     </div>
