@@ -164,6 +164,7 @@ export default {
   padding: 2rem;
   background: #f9f9f9;
   text-align: center;
+  margin-top: 0;
 }
 
 a {
@@ -183,7 +184,6 @@ a {
 .category-heading {
   font-size: 1.6rem;
   color: #222;
-  margin-bottom: 1rem;
   text-align: left;
 }
 
@@ -259,6 +259,10 @@ a {
 
   .subcategory-card img {
     height: 80px;
+  }
+
+  .category-section {
+    
   }
 }
 

@@ -22,7 +22,7 @@
       <div class="popup-box">
         <h3>🎉 Order Confirmed!</h3>
         <p>Your order for <strong>{{ product.title }}</strong> has been placed successfully.</p>
-        <button class="ok-btn" @click="showPopup = false">OK</button>
+        <button class="ok-btn" @click="handleOk">OK</button>
       </div>
     </div>
   </div>
@@ -42,10 +42,27 @@ export default {
   },
   created() {
     const productQuery = this.$route.query.product;
+
     if (productQuery) {
+      // If product is passed through route, parse and save it
       this.product = JSON.parse(productQuery);
+      localStorage.setItem('selectedProduct', JSON.stringify(this.product));
+    } else {
+      // Otherwise, try to load from localStorage
+      const savedProduct = localStorage.getItem('selectedProduct');
+      if (savedProduct) {
+        this.product = JSON.parse(savedProduct);
+      }
     }
   },
+  methods: {
+    handleOk() {
+      // Hide popup and clear product from localStorage
+      this.showPopup = false;
+      localStorage.removeItem('selectedProduct');
+      this.product = null;
+    }
+  }
 };
 </script>
 

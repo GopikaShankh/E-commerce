@@ -140,7 +140,7 @@ a {
   .mobile-nav-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%; /* changed from min-height: 100vh */
+    height: 100%;
   }
 
   .mobile-top-bar {
