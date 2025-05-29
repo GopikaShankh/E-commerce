@@ -42,7 +42,6 @@ export default {
 </script>
 
 <style scoped>
-/* Reset margin/padding globally */
 * {
   margin: 0;
   padding: 0;

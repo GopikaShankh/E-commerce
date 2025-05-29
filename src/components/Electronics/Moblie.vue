@@ -1,19 +1,36 @@
 <template>
+  <!-- Include the navigation bar component at the top -->
   <NavBar />
+
+  <!-- Main container for the mobile phones section -->
   <section class="container">
+    <!-- Heading for the section -->
     <h1 class="heading">Mobile Phones 📱</h1>
+
+    <!-- Subheading giving a brief description -->
     <p class="subheading">Find the latest smartphones at the best prices!</p>
 
+    <!-- Grid container to display products -->
     <div class="products-grid">
+      <!-- Loop through each product in products array and render a product card -->
       <div
         v-for="(product, index) in products"
         :key="index"
         class="product-card"
       >
+        <!-- Product image -->
         <img :src="product.image" :alt="product.title" class="product-image" />
+
+        <!-- Product title -->
         <h3 class="product-title">{{ product.title }}</h3>
+
+        <!-- Product rating with a star icon -->
         <p class="product-rating">⭐ {{ product.rating }} / 5</p>
+
+        <!-- Product price -->
         <p class="product-price">₹{{ product.price }}</p>
+
+        <!-- Buttons for adding to cart or buying now -->
         <div class="btn-group">
           <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
           <button class="buy-now" @click="buyNow(product)">Buy Now</button>
@@ -24,16 +41,20 @@
 </template>
 
 <script>
+// Import NavBar component to use in this component
 import NavBar from '../NavBar.vue'; 
+
+// Import the cart store composable for state management
 import { useCartStore } from '@/store/cartStore';
 
 export default {
-  name: "MobilePhones",
+  name: "MobilePhones", // Component name
   components: {
-    NavBar,
+    NavBar, // Register NavBar component
   },
   data() {
     return {
+      // Array of mobile phone products with title, price, rating, and image path
       products: [
         { title: "iPhone 14", price: 69999, rating: 4.7, image: require('@/assets/subItems/MobilePhones/iphone14.jpg') },
         { title: "Samsung Galaxy S23", price: 74999, rating: 4.6, image: require('@/assets/subItems/MobilePhones/galaxy-s23.jpg') },
@@ -49,22 +70,27 @@ export default {
     };
   },
   methods: {
+    // Method to add a product to the cart using the cart store
     addToCart(product) {
-      const cartStore = useCartStore()
-      cartStore.addToCart(product)
-      alert(`${product.title} added to cart!`);
+      const cartStore = useCartStore(); // Access the cart store
+      cartStore.addToCart(product); // Add product to cart state
+      alert(`${product.title} added to cart!`); // Notify user
     },
-    buyNow(product) {
-      const gstRate = 0.18; 
-      const gstAmount = product.price * gstRate;
-      const priceWithGst = product.price + gstAmount;
 
+    // Method triggered when user clicks 'Buy Now'
+    buyNow(product) {
+      const gstRate = 0.18; // GST rate of 18%
+      const gstAmount = product.price * gstRate; // Calculate GST amount
+      const priceWithGst = product.price + gstAmount; // Calculate total price including GST
+
+      // Create a new product object including GST details
       const productWithGst = {
-        ...product,
-        gstAmount: gstAmount.toFixed(2),
-        priceWithGst: priceWithGst.toFixed(2),
+        ...product, // Spread original product details
+        gstAmount: gstAmount.toFixed(2), // GST amount formatted to 2 decimals
+        priceWithGst: priceWithGst.toFixed(2), // Total price formatted to 2 decimals
       };
 
+      // Navigate to OrderPage route and pass the product data as a query string
       this.$router.push({
         name: 'OrderPage',
         query: { product: JSON.stringify(productWithGst) }
@@ -75,17 +101,20 @@ export default {
 </script>
 
 <style scoped>
+/* Container for padding and full width */
 .container {
   padding: 2rem;
   width: 100%;
 }
 
+/* Section heading style */
 .heading {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 0.5rem;
 }
 
+/* Subheading style */
 .subheading {
   text-align: center;
   font-size: 1.1rem;
@@ -93,12 +122,14 @@ export default {
   color: #555;
 }
 
+/* Grid layout for products with responsive columns */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
+/* Individual product card styles */
 .product-card {
   background: #fff;
   padding: 1rem;
@@ -110,10 +141,12 @@ export default {
   flex-direction: column;
 }
 
+/* Hover effect for product card */
 .product-card:hover {
   transform: translateY(-5px);
 }
 
+/* Product image style */
 .product-image {
   width: 100%;
   height: 250px;
@@ -122,18 +155,21 @@ export default {
   margin-bottom: 1rem;
 }
 
+/* Product title styling */
 .product-title {
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 0.4rem;
 }
 
+/* Product rating style with gold color */
 .product-rating {
   font-size: 0.95rem;
   color: #f39c12;
   margin-bottom: 0.4rem;
 }
 
+/* Product price style with pink color */
 .product-price {
   font-size: 1rem;
   color: #e91e63;

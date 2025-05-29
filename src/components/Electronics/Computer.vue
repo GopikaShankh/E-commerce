@@ -1,19 +1,30 @@
 <template>
+  <!-- Navigation bar component -->
   <NavBar />
+
+  <!-- Main container for computer accessories -->
   <section class="container">
+    <!-- Section title and subtitle -->
     <h1 class="heading">Computer Accessories 💻🖱️</h1>
     <p class="subheading">Enhance your computing experience with these essential accessories.</p>
 
+    <!-- Grid layout for displaying product cards -->
     <div class="products-grid">
+      <!-- Loop through products and render each one -->
       <div
         v-for="(product, index) in products"
         :key="index"
         class="product-card"
       >
+        <!-- Product image -->
         <img :src="product.image" :alt="product.title" class="product-image" />
+
+        <!-- Product details -->
         <h3 class="product-title">{{ product.title }}</h3>
         <p class="product-rating">⭐ {{ product.rating }} / 5</p>
         <p class="product-price">₹{{ product.price }}</p>
+
+        <!-- Buttons to add to cart or buy now -->
         <div class="btn-group">
           <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
           <button class="buy-now" @click="buyNow(product)">Buy Now</button>
@@ -24,14 +35,19 @@
 </template>
 
 <script>
+// Importing NavBar component and the cart store
 import NavBar from '../NavBar.vue';
 import { useCartStore } from '@/store/cartStore';
 
 export default {
   name: "ComputerAccessories",
+
+  // Registering components
   components: {
     NavBar,
   },
+
+  // Component data: list of computer accessories
   data() {
     return {
       products: [
@@ -48,38 +64,45 @@ export default {
       ]
     };
   },
+
   methods: {
+    // Add product to the cart using Pinia store
     addToCart(product) {
       const cartStore = useCartStore()
       cartStore.addToCart(product)
       alert(`${product.title} added to cart!`);
+    },
+
+    // Buy Now function: add GST and navigate to order page with product info
+    buyNow(product) {
+      const gstRate = 0.18; 
+      const gstAmount = product.price * gstRate;
+      const priceWithGst = product.price + gstAmount;
+
+      const productWithGst = {
+        ...product,
+        gstAmount: gstAmount.toFixed(2),
+        priceWithGst: priceWithGst.toFixed(2),
+      };
+
+      // Navigate to the OrderPage with product details passed as query
+      this.$router.push({
+        name: 'OrderPage',
+        query: { product: JSON.stringify(productWithGst) }
+      });
     }
-  },
-  buyNow(product) {
-    const gstRate = 0.18; 
-    const gstAmount = product.price * gstRate;
-    const priceWithGst = product.price + gstAmount;
-
-    const productWithGst = {
-      ...product,
-      gstAmount: gstAmount.toFixed(2),
-      priceWithGst: priceWithGst.toFixed(2),
-    };
-
-    this.$router.push({
-      name: 'OrderPage',
-      query: { product: JSON.stringify(productWithGst) }
-    });
   }
 };
 </script>
 
 <style scoped>
+/* Container styles */
 .container {
   padding: 2rem;
   width: 100%;
 }
 
+/* Heading and subheading */
 .heading {
   font-size: 2.5rem;
   text-align: center;
@@ -93,12 +116,14 @@ export default {
   color: #555;
 }
 
+/* Grid for products */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
+/* Individual product card styles */
 .product-card {
   background: #fff;
   padding: 1rem;
@@ -114,6 +139,7 @@ export default {
   transform: translateY(-5px);
 }
 
+/* Product image styles */
 .product-image {
   width: 100%;
   height: 250px;
@@ -122,6 +148,7 @@ export default {
   margin-bottom: 1rem;
 }
 
+/* Product text styles */
 .product-title {
   font-size: 1.1rem;
   font-weight: 600;

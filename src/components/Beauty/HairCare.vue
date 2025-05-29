@@ -1,19 +1,30 @@
 <template>
+  <!-- Navigation bar component -->
   <NavBar />
+
+  <!-- Main section containing all hair care products -->
   <section class="container">
+    <!-- Page heading -->
     <h1 class="heading">Hair Care Products</h1>
     <p class="subheading">Nourish your hair with our premium products 🌿</p>
 
+    <!-- Grid to display all products -->
     <div class="products-grid">
+      <!-- Looping through each product in the products array -->
       <div
         v-for="(product, index) in products"
         :key="index"
         class="product-card"
       >
+        <!-- Product image -->
         <img :src="product.image" :alt="product.title" class="product-image" />
+
+        <!-- Product details -->
         <h3 class="product-title">{{ product.title }}</h3>
         <p class="product-rating">⭐ {{ product.rating }} / 5</p>
         <p class="product-price">₹{{ product.price }}</p>
+
+        <!-- Buttons for actions -->
         <div class="btn-group">
           <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
           <button class="buy-now" @click="buyNow(product)">Buy Now</button>
@@ -24,14 +35,19 @@
 </template>
 
 <script>
+// Importing the NavBar component
 import NavBar from '../NavBar.vue'
+
+// Importing Pinia cart store for managing cart state
 import { useCartStore } from '@/store/cartStore';
 
 export default {
-  name: "HairCare",
-  components: { NavBar },
+  name: "HairCare", // Component name
+  components: { NavBar }, // Register NavBar as a local component
+
   data() {
     return {
+      // Array of hair care products with details
       products: [
         { title: "Hair Mask - Repair & Shine", price: 499, rating: 4.6, image: require('@/assets/subItems/HairCare/hair-mask.jpg') },
         { title: "Coconut Hair Oil", price: 199, rating: 4.5, image: require('@/assets/subItems/HairCare/coconut-oil.jpg') },
@@ -46,23 +62,29 @@ export default {
       ]
     }
   },
+
   methods: {
+    // Function to add selected product to the cart
     addToCart(product) {
       const cartStore = useCartStore()
       cartStore.addToCart(product)
       alert(`${product.title} added to cart!`);
     },
+
+    // Function to handle Buy Now action with GST calculation and redirection
     buyNow(product) {
-      const gstRate = 0.18; 
+      const gstRate = 0.18; // GST rate is 18%
       const gstAmount = product.price * gstRate;
       const priceWithGst = product.price + gstAmount;
 
+      // Creating a product object with GST details
       const productWithGst = {
         ...product,
         gstAmount: gstAmount.toFixed(2),
         priceWithGst: priceWithGst.toFixed(2),
       };
 
+      // Redirect to order page with product data in query string
       this.$router.push({
         name: 'OrderPage',
         query: { product: JSON.stringify(productWithGst) }
@@ -73,11 +95,13 @@ export default {
 </script>
 
 <style scoped>
+/* Container for the entire product section */
 .container {
   padding: 2rem;
   width: 100%;
 }
 
+/* Main heading styling */
 .heading {
   font-size: 2.5rem;
   text-align: center;
@@ -85,6 +109,7 @@ export default {
   color: #2c3e50;
 }
 
+/* Subheading text */
 .subheading {
   text-align: center;
   font-size: 1.1rem;
@@ -92,6 +117,7 @@ export default {
   color: #555;
 }
 
+/* Grid layout for displaying products */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -99,6 +125,7 @@ export default {
   width: 100%;
 }
 
+/* Each product card */
 .product-card {
   background: #fff;
   padding: 1rem;
@@ -110,10 +137,12 @@ export default {
   flex-direction: column;
 }
 
+/* On hover, lift the card slightly */
 .product-card:hover {
   transform: translateY(-5px);
 }
 
+/* Product image styling */
 .product-image {
   width: 100%;
   height: 250px;
@@ -122,18 +151,21 @@ export default {
   margin-bottom: 1rem;
 }
 
+/* Product title text */
 .product-title {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.4rem;
 }
 
+/* Product rating text */
 .product-rating {
   font-size: 0.95rem;
   color: #f39c12;
   margin-bottom: 0.4rem;
 }
 
+/* Product price text */
 .product-price {
   font-size: 1rem;
   color: #e91e63;

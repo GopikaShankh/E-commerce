@@ -1,10 +1,15 @@
 <template>
+  <!-- Navigation bar component -->
   <NavBar />
+
+  <!-- Main camera section -->
   <section class="container">
     <h1 class="heading">Cameras 📸</h1>
     <p class="subheading">Capture your moments with these high-performance cameras.</p>
 
+    <!-- Grid of camera products -->
     <div class="products-grid">
+      <!-- Loop through each product and display its details -->
       <div
         v-for="(product, index) in products"
         :key="index"
@@ -14,6 +19,8 @@
         <h3 class="product-title">{{ product.title }}</h3>
         <p class="product-rating">⭐ {{ product.rating }} / 5</p>
         <p class="product-price">₹{{ product.price }}</p>
+        
+        <!-- Buttons to add to cart or buy now -->
         <div class="btn-group">
           <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
           <button class="buy-now" @click="buyNow(product)">Buy Now</button>
@@ -24,6 +31,7 @@
 </template>
 
 <script>
+// Import the NavBar component and cart store
 import NavBar from '../NavBar.vue';
 import { useCartStore } from '@/store/cartStore';
 
@@ -34,6 +42,7 @@ export default {
   },
   data() {
     return {
+      // Array of camera products with details
       products: [
         { title: "Canon EOS 1500D", price: 36999, rating: 4.5, image: require('@/assets/subItems/Cameras/canon-eos-1500d.jpg') },
         { title: "Nikon D5600", price: 50999, rating: 4.6, image: require('@/assets/subItems/Cameras/nikon-d5600.jpg') },
@@ -49,13 +58,16 @@ export default {
     };
   },
   methods: {
+    // Method to add product to cart using Pinia store
     addToCart(product) {
       const cartStore = useCartStore()
       cartStore.addToCart(product)
       alert(`${product.title} added to cart!`);
     },
+
+    // Method to navigate to order page with GST-calculated price
     buyNow(product) {
-      const gstRate = 0.18; 
+      const gstRate = 0.18; // 18% GST
       const gstAmount = product.price * gstRate;
       const priceWithGst = product.price + gstAmount;
 
@@ -65,6 +77,7 @@ export default {
         priceWithGst: priceWithGst.toFixed(2),
       };
 
+      // Navigate to order page with product details in query string
       this.$router.push({
         name: 'OrderPage',
         query: { product: JSON.stringify(productWithGst) }
@@ -75,17 +88,20 @@ export default {
 </script>
 
 <style scoped>
+/* Container padding and width */
 .container {
   padding: 2rem;
   width: 100%;
 }
 
+/* Section heading styling */
 .heading {
   font-size: 2.5rem;
   text-align: center;
   margin-bottom: 0.5rem;
 }
 
+/* Subheading under main heading */
 .subheading {
   text-align: center;
   font-size: 1.1rem;
@@ -93,12 +109,14 @@ export default {
   color: #555;
 }
 
+/* Grid layout for product cards */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
+/* Styling for each product card */
 .product-card {
   background: #fff;
   padding: 1rem;
@@ -110,10 +128,12 @@ export default {
   flex-direction: column;
 }
 
+/* Lift card slightly on hover */
 .product-card:hover {
   transform: translateY(-5px);
 }
 
+/* Product image styling */
 .product-image {
   width: 100%;
   height: 250px;
@@ -122,18 +142,21 @@ export default {
   margin-bottom: 1rem;
 }
 
+/* Product title */
 .product-title {
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 0.4rem;
 }
 
+/* Product rating */
 .product-rating {
   font-size: 0.95rem;
   color: #f39c12;
   margin-bottom: 0.4rem;
 }
 
+/* Product price */
 .product-price {
   font-size: 1rem;
   color: #e91e63;

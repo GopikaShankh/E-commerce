@@ -1,19 +1,33 @@
 <template>
+  <!-- Navigation Bar Component -->
   <NavBar />
+
+  <!-- Main Container -->
   <section class="container">
     <h1 class="heading">Body Wash & Soaps 🛁</h1>
     <p class="subheading">Refresh your body and mind with our skin-friendly products!</p>
 
+    <!-- Products Display Grid -->
     <div class="products-grid">
+      <!-- Looping through each product -->
       <div
         v-for="(product, index) in products"
         :key="index"
         class="product-card"
       >
+        <!-- Product Image -->
         <img :src="product.image" :alt="product.title" class="product-image" />
+        
+        <!-- Product Title -->
         <h3 class="product-title">{{ product.title }}</h3>
+        
+        <!-- Product Rating -->
         <p class="product-rating">⭐ {{ product.rating }} / 5</p>
+        
+        <!-- Product Price -->
         <p class="product-price">₹{{ product.price }}</p>
+
+        <!-- Button Group: Add to Cart and Buy Now -->
         <div class="btn-group">
           <button class="add-to-cart" @click="addToCart(product)">Add to Cart</button>
           <button class="buy-now" @click="buyNow(product)">Buy Now</button>
@@ -24,16 +38,24 @@
 </template>
 
 <script>
+// Importing the NavBar component
 import NavBar from '../NavBar.vue'; 
+
+// Importing Pinia cart store
 import { useCartStore } from '@/store/cartStore';
 
 export default {
   name: "BodyWashAndSoap",
+
+  // Registering components
   components: {
     NavBar,
   },
+
+  // Local component data
   data() {
     return {
+      // Array of product objects
       products: [
         { title: "Dove Body Wash", price: 299, rating: 4.5, image: require('@/assets/subItems/BodyCare/dove-wash.jpg') },
         { title: "Lux Velvet Touch Soap", price: 45, rating: 4.2, image: require('@/assets/subItems/BodyCare/lux.jpg') },
@@ -48,23 +70,30 @@ export default {
       ]
     };
   },
+
+  // Component methods
   methods: {
+    // Add selected product to cart
     addToCart(product) {
       const cartStore = useCartStore()
       cartStore.addToCart(product)
       alert(`${product.title} added to cart!`);
     },
+
+    // Navigate to order page with GST-calculated price
     buyNow(product) {
       const gstRate = 0.18; 
       const gstAmount = product.price * gstRate;
       const priceWithGst = product.price + gstAmount;
 
+      // Creating new object including GST details
       const productWithGst = {
         ...product,
         gstAmount: gstAmount.toFixed(2),
         priceWithGst: priceWithGst.toFixed(2),
       };
 
+      // Navigating to the OrderPage with product data in query
       this.$router.push({
         name: 'OrderPage',
         query: { product: JSON.stringify(productWithGst) }
@@ -75,11 +104,13 @@ export default {
 </script>
 
 <style scoped>
+/* Container styling */
 .container {
   padding: 2rem;
   width: 100%;
 }
 
+/* Heading styles */
 .heading {
   font-size: 2.5rem;
   text-align: center;
@@ -87,6 +118,7 @@ export default {
   color: #00695c;
 }
 
+/* Subheading styles */
 .subheading {
   text-align: center;
   font-size: 1.1rem;
@@ -94,6 +126,7 @@ export default {
   color: #444;
 }
 
+/* Grid layout for product cards */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -101,6 +134,7 @@ export default {
   width: 100%;
 }
 
+/* Product card styling */
 .product-card {
   background: #fff;
   padding: 1rem;
@@ -112,10 +146,12 @@ export default {
   flex-direction: column;
 }
 
+/* Hover effect on card */
 .product-card:hover {
   transform: translateY(-5px);
 }
 
+/* Product image styling */
 .product-image {
   width: 100%;
   height: 250px;
@@ -124,18 +160,21 @@ export default {
   margin-bottom: 1rem;
 }
 
+/* Product title styling */
 .product-title {
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 0.4rem;
 }
 
+/* Product rating styling */
 .product-rating {
   font-size: 0.95rem;
   color: #f39c12;
   margin-bottom: 0.4rem;
 }
 
+/* Product price styling */
 .product-price {
   font-size: 1rem;
   color: #e91e63;
