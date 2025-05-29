@@ -57,7 +57,6 @@ export default {
   margin: auto;
   font-family: "Segoe UI", sans-serif;
   border-radius: 12px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
 }
 
 /* Headings */
