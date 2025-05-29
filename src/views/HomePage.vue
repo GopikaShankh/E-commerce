@@ -250,7 +250,7 @@ a {
 
 @media (max-width: 480px) {
   .subcategories {
-    grid-template-columns: repeat(2, 1fr); /* 👈 still 2 per row for small devices */
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .subcategory-card {

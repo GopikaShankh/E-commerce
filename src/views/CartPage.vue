@@ -9,11 +9,16 @@
         :key="index"
         class="cart-item"
       >
-        <img :src="item.image" alt="Product Image" />
+        <!-- ✅ Image fallback check -->
+        <img
+          :src="item?.image || 'https://via.placeholder.com/150'"
+          alt="Product Image"
+        />
+
         <div class="cart-details">
-          <h3>{{ item.title }}</h3>
-          <p>Price: ₹{{ item.price }}</p>
-          <p>Rating: ⭐ {{ item.rating }}</p>
+          <h3>{{ item?.title || 'No Title' }}</h3>
+          <p>Price: ₹{{ item?.price || '0.00' }}</p>
+          <p>Rating: ⭐ {{ item?.rating || 'N/A' }}</p>
           <button @click="removeFromCart(index)">Remove</button>
         </div>
       </div>
@@ -46,7 +51,6 @@ export default {
   margin: 50px auto;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
 }
 
 .cart h2 {
@@ -131,7 +135,6 @@ export default {
   background: #16a085;
 }
 
-/* Responsive Typography */
 @media (max-width: 600px) {
   .cart h2 {
     font-size: 22px;

@@ -30,7 +30,6 @@
       <router-link to="/products" title="Products">🛍️</router-link>
       <router-link to="/order" title="Order">🛒</router-link>
       <router-link to="/contact" title="Contact">📞</router-link>
-      <router-link to="/login" title="Login">👤</router-link>
     </footer>
   </div>
 </template>

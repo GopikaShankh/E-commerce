@@ -310,7 +310,6 @@ body {
 @media (max-width: 600px) {
   .products-list {
     grid-template-columns: 1fr;
-    padding: 1rem;
   }
 
   .order-details,
@@ -319,7 +318,4 @@ body {
     padding: 1.5rem;
   }
 
-  .heading {
-    margin-top: 4rem;
-  }
 }
