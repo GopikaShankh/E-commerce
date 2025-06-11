@@ -80,6 +80,7 @@ export default {
   position: relative;
   opacity: 0;
   transition: opacity 1s ease-in-out;
+  width: 100%;
 }
 
 .banner-slide.active {

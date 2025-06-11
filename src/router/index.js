@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomePage from '@/views/HomePage.vue';
 import ContactPage from '@/views/ContactPage.vue';
 import OrderPage from '@/views/OrderPage.vue';
+import SearchResult from '@/views/SearchResult.vue';
 import ProductsPage from '@/views/ProductsPage.vue';
 import CartPage from '@/views/CartPage.vue';
 import MensWear from '@/components/Fashion/MensWear.vue';
@@ -35,6 +36,7 @@ const routes = [
   { path: '/contact', name: 'Contact', component: ContactPage },
   { path: '/order/:id', name: 'Order', component: OrderPage },
   { path: '/products', name: 'Products', component: ProductsPage },
+  { path: '/search', name: 'SearchResult', component: SearchResult },
   { path: '/cart', component: CartPage },
   { path: '/mens-wear', name: 'MensWear', component: MensWear},
   { path: '/women-wear', name: 'WomenWear', component: WomenWear},

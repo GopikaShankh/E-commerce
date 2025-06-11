@@ -144,6 +144,7 @@ export default {
   max-width: 100%;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding: 2rem;
+  margin-top: 2.5rem;
 }
 
 .contact-form-container h2 {

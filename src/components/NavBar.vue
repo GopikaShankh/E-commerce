@@ -2,23 +2,42 @@
   <div class="mobile-nav-wrapper">
     <!-- Top Navbar for Mobile -->
     <div class="mobile-top-bar">
-      <input type="text" placeholder="Search products..." class="search-bar" />
+      <input
+        type="text"
+        placeholder="Search products..."
+        class="search-bar"
+        v-model="searchText"
+        @keydown.enter="performSearch"
+      />
       <router-link to="/cart" class="icon-link" title="Cart">🛒</router-link>
     </div>
 
     <!-- Full Navbar for Desktop -->
     <nav class="navbar desktop-only">
-      <div class="nav-left">
-        <ul>
-          <li><router-link to="/" exact>Home</router-link></li>
-          <li><router-link to="/products">Products</router-link></li>
-          <li><router-link to="/order">Order</router-link></li>
-          <li><router-link to="/contact">Contact</router-link></li>
-        </ul>
+      <!-- Logo Left -->
+      <div class="logo">
+        <router-link to="/">
+          <img src="@/assets/logo.png" alt="Logo" class="logo-img" />
+        </router-link>
       </div>
 
+      <!-- Center Navigation Links -->
+      <ul class="nav-center">
+        <li><router-link to="/" exact>Home</router-link></li>
+        <li><router-link to="/products">Products</router-link></li>
+        <li><router-link :to="{ path: '/order', query: { showHistory: true } }">Order</router-link></li>
+        <li><router-link to="/contact">Contact</router-link></li>
+      </ul>
+
+      <!-- Right Side Search + Cart + Login -->
       <div class="nav-right">
-        <input type="text" placeholder="Search products..." class="search-bar" />
+        <input
+          type="text"
+          placeholder="Search products..."
+          class="search-bar"
+          v-model="searchText"
+          @keydown.enter="performSearch"
+        />
         <router-link to="/cart" class="icon-link" title="Cart">🛒</router-link>
         <router-link to="/login" class="login-btn">Login</router-link>
       </div>
@@ -28,7 +47,7 @@
     <footer class="mobile-bottom-nav">
       <router-link to="/" title="Home">🏠</router-link>
       <router-link to="/products" title="Products">🛍️</router-link>
-      <router-link to="/order" title="Order">🛒</router-link>
+      <router-link :to="{ path: '/order', query: { showHistory: true } }" title="Order">🧾</router-link>
       <router-link to="/contact" title="Contact">📞</router-link>
     </footer>
   </div>
@@ -36,7 +55,20 @@
 
 <script>
 export default {
-  name: "NavBar"
+  name: "NavBar",
+  data() {
+    return {
+      searchText: "",
+    };
+  },
+  methods: {
+    performSearch() {
+      if (this.searchText.trim() !== "") {
+        this.$router.push({ path: "/search", query: { q: this.searchText.trim() } });
+        this.searchText = "";
+      }
+    },
+  },
 };
 </script>
 
@@ -61,32 +93,35 @@ export default {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.desktop-only {
-  display: flex;
+.logo {
+  flex: 1;
+}
+.logo-img {
+  height: 40px;
+  border-radius: 50%;
 }
 
-.nav-left ul {
+.nav-center {
+  flex: 2;
   display: flex;
+  justify-content: center;
   list-style: none;
-  gap: 1.5rem;
+  gap: 2rem;
 }
-
-a {
+.nav-center li a {
   text-decoration: none;
-  color: inherit;
-}
-
-.nav-left a {
+  color: white;
   font-weight: 600;
   transition: color 0.3s;
 }
-
-.nav-left a:hover {
+.nav-center li a:hover {
   color: #42b983;
 }
 
 .nav-right {
+  flex: 1;
   display: flex;
+  justify-content: flex-end;
   align-items: center;
   gap: 1rem;
 }
@@ -96,11 +131,10 @@ a {
   border-radius: 20px;
   border: none;
   font-size: 1rem;
-  width: 200px;
+  width: 180px;
   outline: none;
   transition: box-shadow 0.3s ease;
 }
-
 .search-bar:focus {
   box-shadow: 0 0 10px rgba(66, 185, 131, 0.7);
 }
@@ -111,28 +145,27 @@ a {
   color: #fff;
   padding: 0.4rem 0.8rem;
   border-radius: 20px;
+  background-color:rgb(246, 251, 249);
+  text-decoration: none;
   transition: background-color 0.3s, color 0.3s;
-}
-
-.login-btn {
-  background-color: #42b983;
 }
 
 .icon-link:hover,
 .login-btn:hover {
-  background-color: #368e6d;
+  background-color:rgb(238, 246, 243);
   color: #fff;
 }
 
+/* Mobile Styles */
 .mobile-top-bar {
   display: none;
 }
-
 .mobile-bottom-nav {
   display: none;
 }
 
-@media (max-width: 768px) {
+/* Responsive */
+@media (max-width: 853px) {
   .desktop-only {
     display: none;
   }
